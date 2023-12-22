@@ -1,13 +1,15 @@
 import store from "@/store/store";
-import type { AppProps } from 'next/app'
+import type { AppProps } from "next/app";
 import "@/styles/globals.css";
 // import { ToastContainer, toast } from "react-toastify";
 import { Provider } from "react-redux";
-export default function App({ Component, pageProps}: AppProps) {
+import MainLayout from "@/layout/MainLayout";
+export default function App({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
-      <Component {...pageProps} />
-      {/* <ToastContainer
+      <MainLayout>
+        <Component {...pageProps} />
+        {/* <ToastContainer
         position="top-right"
         autoClose={5000}
         hideProgressBar={false}
@@ -19,6 +21,7 @@ export default function App({ Component, pageProps}: AppProps) {
         pauseOnHover
         theme="colored"
       /> */}
+      </MainLayout>
     </Provider>
   );
 }

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import DoctorHistory from "@/components/History/DoctorHistory";
 import PatientHistory from "@/components/History/PatientHistory";
 import React, { useState, useEffect } from "react";
@@ -18,16 +18,15 @@ const History = () => {
   const [content, setContent] = useState([]);
   const getHistory = () => {
     const date = "false";
-    if(role=='patient'){
-      patientHistory(date,token).then((response: any) => {
+    if (role == "patient") {
+      patientHistory(date, token).then((response: any) => {
         if (response.status == 200) {
           setContent(response?.list);
           // console.log(response);
         }
       });
-    }
-    else if(role=='doctor'){
-      doctorHistory(date,token).then((response: any) => {
+    } else if (role == "doctor") {
+      doctorHistory(date, token).then((response: any) => {
         if (response.status == 200) {
           setContent(response?.list);
           // console.log(response);
@@ -37,17 +36,15 @@ const History = () => {
   };
   useEffect(() => {
     dispatch(getLoggedinStatus());
-    if(isLoggedin){
+    if (isLoggedin) {
       getHistory();
     }
-  }, [router,isLoggedin]);
+  }, [router, isLoggedin]);
   return (
-    <MainLayout>
-      <div className="container mx-auto">
-        {role == "patient" && <PatientHistory content={content}/>}
-        {role == "doctor" && <DoctorHistory content={content}/>}
-      </div>
-    </MainLayout>
+    <div className="container mx-auto">
+      {role == "patient" && <PatientHistory content={content} />}
+      {role == "doctor" && <DoctorHistory content={content} />}
+    </div>
   );
 };
 

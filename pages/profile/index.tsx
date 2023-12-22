@@ -8,12 +8,10 @@ import { useSelector } from "react-redux";
 const Profile = () => {
   const role = useSelector((state: any) => state.auth.role);
   return (
-    <MainLayout>
-      <div>
-        {role == "patient" && <Patient />}
-        {role == "doctor" && <Doctor />}
-      </div>
-    </MainLayout>
+    <div>
+      {role == "patient" && <Patient />}
+      {role == "doctor" && <Doctor />}
+    </div>
   );
 };
 

@@ -40,46 +40,6 @@ export default function Home() {
       bgColor: "bg-gray-50",
     },
   ];
-  // const doctors = [
-  //   {
-  //     section:"doctor",
-  //     cardTitle: "Dr. Alfaz Ahmad",
-  //     bgColor: "bg-gray-50",
-  //     rating:"4.0",
-  //     badge:"Surgeon",
-  //     hospital:"Green Life Hospital",
-  //   },
-  //   {
-  //     section:"doctor",
-  //     cardTitle: "Dr. Alfaz Ahmad",
-  //     bgColor: "bg-gray-50",
-  //     rating:"4.0",
-  //     badge:"Surgeon",
-  //     hospital:"Green Life Hospital",
-  //   },
-  //   {
-  //     section:"doctor",
-  //     cardTitle: "Dr. Alfaz Ahmad",
-  //     bgColor: "bg-gray-50",
-  //     rating:"4.0",
-  //     badge:"Surgeon",
-  //     hospital:"Green Life Hospital",
-  //   },
-  //   {
-  //     section:"doctor",
-  //     cardTitle: "Dr. Alfaz Ahmad",
-  //     bgColor: "bg-gray-50",
-  //     rating:"4.0",
-  //     badge:"Surgeon",
-  //     hospital:"Green Life Hospital",
-  //   },
-  // ]
-  // const testSocket = ()=>{
-  //   openSocket(process.env.BASE_URL);
-  // }
-  // useEffect(()=>{
-  //   testSocket();
-  // },[])
   const getDoctor = () => {
     getHomePageDoctor()
       .then((response: any) => {
@@ -108,53 +68,51 @@ export default function Home() {
     dispatch(getLoggedinStatus());
   }, [router]);
   return (
-    <MainLayout>
-      <main className="">
-        <Banner />
-        {/* Service section */}
-        <Section heading="Service" description="">
-          <div className="grid grid-cols-3 mt-12 gap-4">
-            {services.length > 0
-              ? services.map((service, index) => {
-                  return (
-                    <Card
-                      key={index}
-                      section={service.section}
-                      icon={service.icon}
-                      cardTitle={service.cardTitle}
-                      cardDescription={service.cardDescription}
-                      bgColor={service.bgColor}
-                      badge=""
-                      info={[]}
-                    />
-                  );
-                })
-              : ""}
-          </div>
-        </Section>
+    <main className="">
+      <Banner />
+      {/* Service section */}
+      <Section heading="Service" description="">
+        <div className="grid grid-cols-3 mt-12 gap-4">
+          {services.length > 0
+            ? services.map((service, index) => {
+                return (
+                  <Card
+                    key={index}
+                    section={service.section}
+                    icon={service.icon}
+                    cardTitle={service.cardTitle}
+                    cardDescription={service.cardDescription}
+                    bgColor={service.bgColor}
+                    badge=""
+                    info={[]}
+                  />
+                );
+              })
+            : ""}
+        </div>
+      </Section>
 
-        {/* doctor section */}
-        <Section heading="Doctor" description="">
-          <div className="grid grid-cols-4 mt-12 gap-4">
-            {doctors.length > 0
-              ? doctors.map((doctor: any, index: number) => {
-                  return (
-                    <Card
-                      key={index}
-                      section="doctor"
-                      icon=""
-                      cardTitle=""
-                      cardDescription=""
-                      bgColor=""
-                      badge=""
-                      info={doctor}
-                    />
-                  );
-                })
-              : ""}
-          </div>
-        </Section>
-      </main>
-    </MainLayout>
+      {/* doctor section */}
+      <Section heading="Doctor" description="">
+        <div className="grid grid-cols-4 mt-12 gap-4">
+          {doctors.length > 0
+            ? doctors.map((doctor: any, index: number) => {
+                return (
+                  <Card
+                    key={index}
+                    section="doctor"
+                    icon=""
+                    cardTitle=""
+                    cardDescription=""
+                    bgColor=""
+                    badge=""
+                    info={doctor}
+                  />
+                );
+              })
+            : ""}
+        </div>
+      </Section>
+    </main>
   );
 }

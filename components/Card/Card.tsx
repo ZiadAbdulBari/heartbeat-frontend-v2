@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import UiModal from "../ui/Modal/UiModal";
@@ -91,7 +90,7 @@ const Card = ({
         setAge("");
         setContact("");
         setDisease("");
-        setSelectedDate('');
+        setSelectedDate("");
       }
       console.log(response);
     });
@@ -106,7 +105,7 @@ const Card = ({
       {section == "service" && (
         <Image src={icon} alt={cardTitle + " icon"} className="mx-auto" />
       )}
-      <h1 className="text-black/[0.8] text-[20px] font-semibold mt-8 text-center">
+      <h1 className="text-black/[0.8] text-[20px] font-semibold  text-center">
         {info.name}
       </h1>
       {section == "service" && (
@@ -148,12 +147,25 @@ const Card = ({
               </svg>
             </div>
           </div>
-          <p
-            className="w-full text-center bg-blue text-red font-semibold rounded py-2 mt-8 cursor-pointer"
+          <button
+            className="w-full text-center bg-blue text-white  font-semibold rounded py-2 mt-8"
             onClick={handleScheduleCheck}
           >
-            Schedule Check
-          </p>
+            <div className="flex gap-2 items-center justify-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width="20"
+                height="20"
+              >
+                <path
+                  d="M9 1V3H15V1H17V3H21C21.5523 3 22 3.44772 22 4V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2.44772 3 3 3H7V1H9ZM20 10H4V19H20V10ZM15.0355 11.136L16.4497 12.5503L11.5 17.5L7.96447 13.9645L9.37868 12.5503L11.5 14.6716L15.0355 11.136ZM7 5H4V8H20V5H17V6H15V5H9V6H7V5Z"
+                  fill="rgba(255,255,255,1)"
+                ></path>
+              </svg>
+              Appointment
+            </div>
+          </button>
           <UiModal
             isModalOpen={isModalOpen}
             setIsModalOpen={setIsModalOpen}

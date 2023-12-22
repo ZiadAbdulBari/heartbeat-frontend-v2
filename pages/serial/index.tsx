@@ -49,14 +49,12 @@ const Serial = () => {
     }
   }, [router, isLoggedin]);
   return (
-    <MainLayout>
-      <div className="container mx-auto">
-        {role == "patient" && <PatientSerial content={content} />}
-        {role == "doctor" && (
-          <DoctorSerial content={content} onClick={callPatient} />
-        )}
-      </div>
-    </MainLayout>
+    <div className="container mx-auto">
+      {role == "patient" && <PatientSerial content={content} />}
+      {role == "doctor" && (
+        <DoctorSerial content={content} onClick={callPatient} />
+      )}
+    </div>
   );
 };
 

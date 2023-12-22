@@ -9,7 +9,7 @@ interface SectionProps {
 }
 const Section = ({ heading, description, children }: SectionProps) => {
   return (
-    <div className="w-full">
+    <div className="w-full my-[20px]">
       <div className="container mx-auto">
         <div className="mt-20">
           <h1 className="text-[50px] text-blue font-semibold text-center">

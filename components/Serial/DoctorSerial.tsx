@@ -2,24 +2,7 @@
 import TableBody from "../ui/Table/TableBody";
 import Tr from "../ui/Table/Tr";
 import Td from "../ui/Table/Td";
-// import { editStateus } from "@/services/service";
-// import React, { useState, useEffect } from "react";
-// import { useRouter } from "next/navigation";
-// import { useDispatch, useSelector } from "react-redux";
-// import { getLoggedinStatus } from "@/store/authSlice";
 const DoctorSerial = ({ content,onClick }: any) => {
-//   const router = useRouter();
-//   const role = useSelector((state: any) => state.auth.role);
-//   const dispatch = useDispatch();
-//   const token = useSelector((state: any) => state.auth.token);
-//   const isLoggedin = useSelector((state: any) => state.auth.isLoggedin);
-  
-//   useEffect(() => {
-//     dispatch(getLoggedinStatus());
-//     // if(isLoggedin){
-//     //   getSerial();
-//     // }
-//   }, [router, isLoggedin]);
   return (
     <div>
       <TableBody

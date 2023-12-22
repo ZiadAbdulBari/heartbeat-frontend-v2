@@ -1,32 +1,8 @@
-
-import React, { useEffect, useState } from "react";
+import React from "react";
 import TableBody from "../ui/Table/TableBody";
 import Tr from "../ui/Table/Tr";
 import Td from "../ui/Table/Td";
-// import { useDispatch, useSelector } from "react-redux";
-// import { getLoggedinStatus } from "@/store/authSlice";
-// import { useRouter } from "next/navigation";
-// import { appointmentList } from "@/services/service";
 const DoctorHistory = ({ content }: any) => {
-  // const router = useRouter();
-  // const dispatch = useDispatch();
-  // const token = useSelector((state: any) => state.auth.token);
-  // const [tabTitle, setTabTitle] = useState([
-  //   "Current record",
-  //   "Previous record",
-  // ]);
-  // const [content, setContent] = useState([]);
-  // const date = new Date();
-  // const day = date.toLocaleDateString();
-  // const getAppointmentList = () => {
-  //   appointmentList(day, token).then((response: any) => {
-  //     console.log(response);
-  //   });
-  // };
-  // useEffect(() => {
-  //   dispatch(getLoggedinStatus());
-  //   getAppointmentList();
-  // }, [router]);
   return (
     <div>
       <TableBody

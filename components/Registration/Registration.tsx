@@ -28,7 +28,6 @@ const Registration = () => {
   const userRegistration = ()=>{
     registration(name,email,password,account)
     .then((res:any)=>{
-      // console.log(res);
       if(res.status==200){
         router.push('/signin');
 

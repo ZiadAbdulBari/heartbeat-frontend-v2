@@ -32,12 +32,10 @@ const Serial = () => {
     }
   };
   const callPatient = (status: string, id: string) => {
-    console.log(status, id);
     editStateus(status, id, token).then((response: any) => {
       if (response.status == 200) {
         getSerial();
       }
-      // console.log(response);
     });
   };
   useEffect(() => {

@@ -42,14 +42,10 @@ export default function Home() {
   const getDoctor = () => {
     getHomePageDoctor()
       .then((response: any) => {
-        console.log(response);
         if (response.status == 200) {
           setDoctors(response.data);
         }
       })
-      .catch((error: any) => {
-        console.log(error);
-      });
   };
   useEffect(() => {
     getDoctor();

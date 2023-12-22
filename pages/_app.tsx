@@ -3,9 +3,12 @@ import type { AppProps } from 'next/app'
 import "@/styles/globals.css";
 // import { ToastContainer, toast } from "react-toastify";
 import { Provider } from "react-redux";
+import MainLayout from "@/layout/MainLayout";
 export default function App({ Component, pageProps}: AppProps) {
   return (
     <Provider store={store}>
+      <MainLayout>
+
       <Component {...pageProps} />
       {/* <ToastContainer
         position="top-right"
@@ -19,6 +22,7 @@ export default function App({ Component, pageProps}: AppProps) {
         pauseOnHover
         theme="colored"
       /> */}
+      </MainLayout>
     </Provider>
   );
 }

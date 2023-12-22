@@ -9,7 +9,6 @@ import { useDispatch } from "react-redux";
 import { getLoggedinStatus } from "@/store/authSlice";
 import { useRouter } from "next/navigation";
 import { getHomePageDoctor } from "@/services/service";
-import MainLayout from "@/layout/MainLayout";
 export default function Home() {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -40,46 +39,6 @@ export default function Home() {
       bgColor: "bg-gray-50",
     },
   ];
-  // const doctors = [
-  //   {
-  //     section:"doctor",
-  //     cardTitle: "Dr. Alfaz Ahmad",
-  //     bgColor: "bg-gray-50",
-  //     rating:"4.0",
-  //     badge:"Surgeon",
-  //     hospital:"Green Life Hospital",
-  //   },
-  //   {
-  //     section:"doctor",
-  //     cardTitle: "Dr. Alfaz Ahmad",
-  //     bgColor: "bg-gray-50",
-  //     rating:"4.0",
-  //     badge:"Surgeon",
-  //     hospital:"Green Life Hospital",
-  //   },
-  //   {
-  //     section:"doctor",
-  //     cardTitle: "Dr. Alfaz Ahmad",
-  //     bgColor: "bg-gray-50",
-  //     rating:"4.0",
-  //     badge:"Surgeon",
-  //     hospital:"Green Life Hospital",
-  //   },
-  //   {
-  //     section:"doctor",
-  //     cardTitle: "Dr. Alfaz Ahmad",
-  //     bgColor: "bg-gray-50",
-  //     rating:"4.0",
-  //     badge:"Surgeon",
-  //     hospital:"Green Life Hospital",
-  //   },
-  // ]
-  // const testSocket = ()=>{
-  //   openSocket(process.env.BASE_URL);
-  // }
-  // useEffect(()=>{
-  //   testSocket();
-  // },[])
   const getDoctor = () => {
     getHomePageDoctor()
       .then((response: any) => {
@@ -108,7 +67,6 @@ export default function Home() {
     dispatch(getLoggedinStatus());
   }, [router]);
   return (
-    <MainLayout>
       <main className="">
         <Banner />
         {/* Service section */}
@@ -155,6 +113,5 @@ export default function Home() {
           </div>
         </Section>
       </main>
-    </MainLayout>
   );
 }

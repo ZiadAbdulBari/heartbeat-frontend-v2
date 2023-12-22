@@ -7,8 +7,6 @@ import PatientSerial from "@/components/Serial/PatientSerial";
 import DoctorSerial from "@/components/Serial/DoctorSerial";
 import { editStateus, patientHistory } from "@/services/service";
 import { doctorHistory } from "@/services/service";
-import openSocket from "socket.io-client";
-import MainLayout from "@/layout/MainLayout";
 const Serial = () => {
   const role = useSelector((state: any) => state.auth.role);
   const router = useRouter();
@@ -49,14 +47,12 @@ const Serial = () => {
     }
   }, [router, isLoggedin]);
   return (
-    <MainLayout>
       <div className="container mx-auto">
         {role == "patient" && <PatientSerial content={content} />}
         {role == "doctor" && (
           <DoctorSerial content={content} onClick={callPatient} />
         )}
       </div>
-    </MainLayout>
   );
 };
 

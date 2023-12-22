@@ -11,10 +11,12 @@ const Navbar = () => {
   const isLoggedin = useSelector((state: any) => state.auth.isLoggedin);
   const role = useSelector((state: any) => state.auth.role);
   const logout = () => {
-    window.localStorage.removeItem("isLoggedin");
+    // window.localStorage.removeItem("isLoggedin");
+    window.localStorage.setItem("isLoggedin", JSON.stringify(false));
     window.localStorage.setItem("token", JSON.stringify(""));
     window.localStorage.setItem("role", JSON.stringify(""));
     window.localStorage.setItem("role", JSON.stringify(""));
+    window.localStorage.setItem("user_id", JSON.stringify(""));
     dispatch(getLoggedinStatus());
     router.push('/')
   };

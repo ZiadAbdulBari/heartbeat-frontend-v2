@@ -4,7 +4,10 @@ export default function Document() {
   // const raleway = Raleway()
   return (
     <Html lang="en">
-      <Head />
+      <Head>
+        <title>Heartbeat</title>
+        <link rel="icon" href="/favicon.ico"/>
+      </Head>
       <body>
         <Main/>
         <NextScript />

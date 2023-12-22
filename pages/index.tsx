@@ -9,7 +9,6 @@ import { useDispatch } from "react-redux";
 import { getLoggedinStatus } from "@/store/authSlice";
 import { useRouter } from "next/navigation";
 import { getHomePageDoctor } from "@/services/service";
-import MainLayout from "@/layout/MainLayout";
 export default function Home() {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -43,14 +42,10 @@ export default function Home() {
   const getDoctor = () => {
     getHomePageDoctor()
       .then((response: any) => {
-        console.log(response);
         if (response.status == 200) {
           setDoctors(response.data);
         }
       })
-      .catch((error: any) => {
-        console.log(error);
-      });
   };
   useEffect(() => {
     getDoctor();

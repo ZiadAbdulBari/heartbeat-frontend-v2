@@ -7,7 +7,6 @@ import { getLoggedinStatus } from "@/store/authSlice";
 import { useRouter } from "next/navigation";
 import { patientHistory } from "@/services/service";
 import { doctorHistory } from "@/services/service";
-import MainLayout from "@/layout/MainLayout";
 
 const History = () => {
   const role = useSelector((state: any) => state.auth.role);
@@ -22,14 +21,12 @@ const History = () => {
       patientHistory(date, token).then((response: any) => {
         if (response.status == 200) {
           setContent(response?.list);
-          // console.log(response);
         }
       });
     } else if (role == "doctor") {
       doctorHistory(date, token).then((response: any) => {
         if (response.status == 200) {
           setContent(response?.list);
-          // console.log(response);
         }
       });
     }

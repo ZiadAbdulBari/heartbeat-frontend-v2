@@ -67,7 +67,6 @@ const Doctor = () => {
   };
   const handleDay = (e: any) => {
     setWorkDay(e.target.value);
-    // console.log(e.target.value);
   };
   const storeSchedule = (e: any) => {
     e.preventDefault();

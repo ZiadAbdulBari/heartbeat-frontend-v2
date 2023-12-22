@@ -1,7 +1,6 @@
 "use client";
 import Doctor from "@/components/Profile/Doctor";
 import Patient from "@/components/Profile/Patient";
-import MainLayout from "@/layout/MainLayout";
 import React from "react";
 import { useSelector } from "react-redux";
 

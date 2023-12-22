@@ -24,7 +24,6 @@ const Login = () => {
   const userLogin = (e:any)=>{
     login(email,password)
     .then((response:any)=>{
-      console.log(response);
       if(response.status==200){
         window.localStorage.setItem('isLoggedin',JSON.stringify(true));
         window.localStorage.setItem('token',JSON.stringify(response. access_token));
@@ -33,9 +32,6 @@ const Login = () => {
         dispatch(getLoggedinStatus());
         router.push('/');
       }
-    })
-    .catch((error:any)=>{
-      console.log(error);
     })
   }
   return (

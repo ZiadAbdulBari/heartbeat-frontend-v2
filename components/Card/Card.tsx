@@ -92,7 +92,6 @@ const Card = ({
         setDisease("");
         setSelectedDate("");
       }
-      console.log(response);
     });
   };
   useEffect(() => {

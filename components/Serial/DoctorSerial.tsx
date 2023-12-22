@@ -1,24 +1,23 @@
-
 import TableBody from "../ui/Table/TableBody";
 import Tr from "../ui/Table/Tr";
 import Td from "../ui/Table/Td";
-const DoctorSerial = ({ content,onClick }: any) => {
+const DoctorSerial = ({ content, onClick }: any) => {
   return (
     <div>
-      <TableBody
-        tableHeader={[
-          "User id",
-          "Patient name",
-          "Age",
-          "Contact",
-          "Disease",
-          "Checkup date",
-          "Status",
-          "Action",
-        ]}
-      >
-        {content.length > 0 ? (
-          content.map((data: any, index: number) => (
+      {content.length > 0 ? (
+        <TableBody
+          tableHeader={[
+            "User id",
+            "Patient name",
+            "Age",
+            "Contact",
+            "Disease",
+            "Checkup date",
+            "Status",
+            "Action",
+          ]}
+        >
+          {content.map((data: any, index: number) => (
             <Tr key={index} extrsRowCss="">
               <Td extrsColCss="">{data._id}</Td>
               <Td extrsColCss="">{data.patient_name}</Td>
@@ -29,7 +28,7 @@ const DoctorSerial = ({ content,onClick }: any) => {
               <Td extrsColCss="">{data.status}</Td>
               <Td extrsColCss="">
                 <div
-                  onClick={()=>onClick('calling',data._id)}
+                  onClick={() => onClick("calling", data._id)}
                   className="flex gap-2 items-center bg-green-200 py-[5px] px-[10px] rounded-[5px] font-medium cursor-pointer"
                 >
                   <svg
@@ -47,11 +46,11 @@ const DoctorSerial = ({ content,onClick }: any) => {
                 </div>
               </Td>
             </Tr>
-          ))
-        ) : (
-          <p>No record</p>
-        )}
-      </TableBody>
+          ))}
+        </TableBody>
+      ) : (
+        <p>No record</p>
+      )}
     </div>
   );
 };

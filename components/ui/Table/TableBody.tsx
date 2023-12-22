@@ -9,7 +9,7 @@ const TableBody = ({ tableHeader, children }: BodyProps) => {
       <thead className="bg-gray-100 py-[5px]">
         <tr>
           {tableHeader.length > 0
-            ? tableHeader.map((th, index) => <th className="text-left" key={index}>{th}</th>)
+            ? tableHeader.map((th, index) => <th className="text-left px-[10px]" key={index}>{th}</th>)
             : ""}
         </tr>
       </thead>

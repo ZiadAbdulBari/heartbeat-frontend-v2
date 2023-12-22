@@ -14,8 +14,13 @@ const Doctor = () => {
   const dispatch = useDispatch();
   const token = useSelector((state: any) => state.auth.token);
   const [profileData, setProfileData] = useState<any>({});
+
   const [isEdit, setIsEdit] = useState(false);
-  const [fulfill, setFulfill] = useState(false);
+
+  const [editSchedule, setEditSchedule] = useState(false);
+  const [rowIndex, setRowIndex] = useState("");
+  const [newRow, setNewRow] = useState(false);
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [contact, setContact] = useState("");
@@ -39,6 +44,7 @@ const Doctor = () => {
   const [schedule, setSchedule] = useState<
     Array<{ day: string; time: string; place: string; limit: string }>
   >([]);
+
   const changeInputValue = (e: any) => {
     if (e.target.name == "name") {
       setName(e.target.value);
@@ -78,6 +84,7 @@ const Doctor = () => {
     };
     const newSchedule = [...schedule, doctorTime];
     setSchedule(newSchedule);
+    editProfile(newSchedule);
     setWorkDay("");
     setTime("");
     setPlace("");
@@ -98,8 +105,7 @@ const Doctor = () => {
       }
     });
   };
-  const editProfile = (e: any) => {
-    e.preventDefault();
+  const editProfile = (available: any) => {
     const data = {
       name: name,
       email: email,
@@ -108,15 +114,68 @@ const Doctor = () => {
       specialist_on: specialist,
       degree: degree.split(","),
       NID: NID,
-      available: schedule,
+      available: available,
     };
     editProfileData(data, token).then((response: any) => {
+      console.log(response);
       if (response.status == 200) {
         setIsEdit(false);
-        setFulfill(false);
         getProfile();
+        setNewRow(false);
       }
     });
+  };
+  const cancelPersonalInfoEdit = () => {
+    setName(profileData?.name);
+    setEmail(profileData?.email);
+    setContact(profileData?.contact);
+    setWorkingPlace(profileData?.work_at);
+    setSpecialist(profileData?.specialist_on)
+    setNID(profileData?.NID);
+    setDegree(profileData?.degree.toString());
+    setSchedule(profileData?.available);
+    setIsEdit(false);
+  };
+
+  // SCHEDULE FUNCTIONSLITY
+  const isEditSchedule = (index: any, rowData: any) => {
+    setRowIndex(index);
+    setEditSchedule(true);
+    setWorkDay(rowData.day);
+    setTime(rowData.time);
+    setPlace(rowData.place);
+    setLimit(rowData.limit);
+  };
+  const cancelEditing = () => {
+    setRowIndex("");
+    setEditSchedule(false);
+    setWorkDay("");
+    setTime("");
+    setPlace("");
+    setLimit("");
+  };
+  const cancelAdding = () => {
+    setNewRow(false);
+    setWorkDay("");
+    setTime("");
+    setPlace("");
+    setLimit("");
+  };
+  const eidtRow = (index: number) => {
+    const doctorTime = {
+      day: workDay,
+      time: time,
+      place: place,
+      limit: limit,
+    };
+    const newTime = schedule;
+    newTime[index] = doctorTime;
+    setSchedule(newTime);
+    editProfile(newTime);
+    cancelEditing();
+  };
+  const addRow = () => {
+    setNewRow(true);
   };
   useEffect(() => {
     dispatch(getLoggedinStatus());
@@ -129,7 +188,7 @@ const Doctor = () => {
           <div className="w-[80%] mx-auto bg-white p-[30px] rounded-[12px]">
             {!isEdit && (
               <>
-                <div className="flex justify-between mb-4 cursor-pointer">
+                <div className="flex justify-between mb-4 items-center">
                   <p className="text-[22px] text-blue">Personel informetion</p>
                   <svg
                     onClick={() => setIsEdit(true)}
@@ -218,167 +277,343 @@ const Doctor = () => {
             )}
             {isEdit && (
               <form>
-                {!fulfill && (
-                  <div>
-                    <div className="grid grid-cols-2 gap-6">
-                      <Input
-                        type="text"
-                        id="name"
-                        name="name"
-                        label="Name"
-                        value={name}
-                        placeholder="Enter your name"
-                        onChange={changeInputValue}
-                        extraCssForLabel=""
-                        extraCssForInput=""
-                      />
-                      <Input
-                        type="email"
-                        id="email"
-                        name="email"
-                        label="Email Address"
-                        value={email}
-                        placeholder="Enter your email address"
-                        onChange={changeInputValue}
-                        extraCssForLabel=""
-                        extraCssForInput=""
-                      />
-                      <Input
-                        type="text"
-                        id="contact"
-                        name="contact"
-                        label="Contact Number"
-                        value={contact}
-                        placeholder="Enter your contact number"
-                        onChange={changeInputValue}
-                        extraCssForLabel=""
-                        extraCssForInput=""
-                      />
-                      <Input
-                        type="text"
-                        id="work_at"
-                        name="work_at"
-                        label="Working Place"
-                        value={workingPlace}
-                        placeholder="White your working place address"
-                        onChange={changeInputValue}
-                        extraCssForLabel=""
-                        extraCssForInput=""
-                      />
-                      <Input
-                        type="text"
-                        id="specialist_on"
-                        name="specialist_on"
-                        label="Specialist"
-                        value={specialist}
-                        placeholder="White your working place address"
-                        onChange={changeInputValue}
-                        extraCssForLabel=""
-                        extraCssForInput=""
-                      />
-                      <Input
-                        type="text"
-                        id="degree"
-                        name="degree"
-                        label="Degree"
-                        value={degree.toString()}
-                        placeholder="White your degrees"
-                        onChange={changeInputValue}
-                        extraCssForLabel=""
-                        extraCssForInput=""
-                      />
-                      <Input
-                        type="text"
-                        id="NID"
-                        name="NID"
-                        label="NID Number"
-                        value={NID}
-                        placeholder="White your NID number"
-                        onChange={changeInputValue}
-                        extraCssForLabel=""
-                        extraCssForInput=""
-                      />
-                    </div>
-                    <div className="flex justify-end gap-6 mt-8">
-                      <button
-                        className="bg-red text-white px-[20px] py-[10px] rounded-[8px]"
-                        onClick={() => setIsEdit(false)}
-                      >
-                        Cancle
-                      </button>
-                      <button
-                        className="bg-blue text-white px-[20px] py-[10px] rounded-[8px]"
-                        onClick={() => setFulfill(true)}
-                      >
-                        Next Page
-                      </button>
-                    </div>
+                <div className="grid grid-cols-2 gap-6">
+                  <Input
+                    type="text"
+                    id="name"
+                    name="name"
+                    label="Name"
+                    value={name}
+                    placeholder="Enter your name"
+                    onChange={changeInputValue}
+                    extraCssForLabel=""
+                    extraCssForInput=""
+                  />
+                  <Input
+                    type="email"
+                    id="email"
+                    name="email"
+                    label="Email Address"
+                    value={email}
+                    placeholder="Enter your email address"
+                    onChange={changeInputValue}
+                    extraCssForLabel=""
+                    extraCssForInput=""
+                  />
+                  <Input
+                    type="text"
+                    id="contact"
+                    name="contact"
+                    label="Contact Number"
+                    value={contact}
+                    placeholder="Enter your contact number"
+                    onChange={changeInputValue}
+                    extraCssForLabel=""
+                    extraCssForInput=""
+                  />
+                  <Input
+                    type="text"
+                    id="work_at"
+                    name="work_at"
+                    label="Working Place"
+                    value={workingPlace}
+                    placeholder="White your working place address"
+                    onChange={changeInputValue}
+                    extraCssForLabel=""
+                    extraCssForInput=""
+                  />
+                  <Input
+                    type="text"
+                    id="specialist_on"
+                    name="specialist_on"
+                    label="Specialist"
+                    value={specialist}
+                    placeholder="White your working place address"
+                    onChange={changeInputValue}
+                    extraCssForLabel=""
+                    extraCssForInput=""
+                  />
+                  <Input
+                    type="text"
+                    id="degree"
+                    name="degree"
+                    label="Degree"
+                    value={degree.toString()}
+                    placeholder="White your degrees"
+                    onChange={changeInputValue}
+                    extraCssForLabel=""
+                    extraCssForInput=""
+                  />
+                  <Input
+                    type="text"
+                    id="NID"
+                    name="NID"
+                    label="NID Number"
+                    value={NID}
+                    placeholder="White your NID number"
+                    onChange={changeInputValue}
+                    extraCssForLabel=""
+                    extraCssForInput=""
+                  />
+                </div>
+                <div className="flex justify-end gap-2">
+                  <div
+                    className="px-[15px] py-[5px] rounded-[5px] bg-red cursor-pointer text-white"
+                    onClick={cancelPersonalInfoEdit}
+                  >
+                    Cancel
                   </div>
-                )}
-                {fulfill && (
-                  <div>
-                    <div className="grid grid-cols-5 gap-6">
-                      <div className="flex justify-center items-center">
-                        <OptionSelect options={day} onChange={handleDay} />
-                      </div>
-                      <Input
-                        type="text"
-                        id="time"
-                        name="time"
-                        label="Duration"
-                        value={time}
-                        placeholder="When will you start?"
-                        onChange={changeScheduleData}
-                        extraCssForLabel=""
-                        extraCssForInput=""
-                      />
-                      <Input
-                        type="text"
-                        id="place"
-                        name="place"
-                        label="Chamber address"
-                        value={place}
-                        placeholder="Where is your chamben?"
-                        onChange={changeScheduleData}
-                        extraCssForLabel=""
-                        extraCssForInput=""
-                      />
-                      <Input
-                        type="text"
-                        id="limit"
-                        name="limit"
-                        label="Maximum patient"
-                        value={limit}
-                        placeholder="How many patiences will you check?"
-                        onChange={changeScheduleData}
-                        extraCssForLabel=""
-                        extraCssForInput=""
-                      />
-                      <div className="flex justify-center items-center mt-[24px]">
-                        <button onClick={storeSchedule}>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            width="24"
-                            height="24"
-                          >
-                            <path
-                              d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11 11H7V13H11V17H13V13H17V11H13V7H11V11Z"
-                              fill="rgba(100,205,138,1)"
-                            ></path>
-                          </svg>
-                        </button>
-                      </div>
-                    </div>
-                    <div className="flex justify-end" onClick={editProfile}>
-                      <button className="px-[10px] py-[5px] rounded-[5px] bg-red">
-                        Save
-                      </button>
-                    </div>
+                  <div
+                    className="px-[15px] py-[5px] rounded-[5px] bg-green-200 cursor-pointer"
+                    onClick={() => editProfile(schedule)}
+                  >
+                    Save
                   </div>
-                )}
+                </div>
               </form>
             )}
+          </div>
+          <div className="w-[80%] mx-auto bg-white p-[30px] rounded-[12px] mt-8">
+            <div className="flex justify-between items-center mb-4">
+              <p className="text-[22px] text-blue">Doctor schedule</p>
+              {profileData.available?.length > 0 && (
+                <svg
+                  onClick={addRow}
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  height="24"
+                >
+                  <path
+                    d="M11 11V7H13V11H17V13H13V17H11V13H7V11H11ZM12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20Z"
+                    className="fill-blue"
+                  ></path>
+                </svg>
+              )}
+            </div>
+            <TableBody
+              tableHeader={["Day", "Duration", "Chamber", "Limit", "Action"]}
+            >
+              {profileData.available?.length > 0 ? (
+                profileData.available.map((schedule: any, index: number) =>
+                  editSchedule && rowIndex == index.toString() ? (
+                    <Tr key={index} extrsRowCss="bg-gray-20">
+                      <Td extrsColCss="px-[10px] py-[8px] font-mediume text-gray-800 text-[18px]">
+                        <OptionSelect
+                          options={day}
+                          onChange={handleDay}
+                          selectedDay={workDay}
+                        />
+                      </Td>
+                      <Td extrsColCss="px-[10px] py-[8px] font-mediume text-gray-800 text-[18px]">
+                        <Input
+                          type="text"
+                          id="time"
+                          name="time"
+                          label=""
+                          value={time}
+                          placeholder="When will you start?"
+                          onChange={changeScheduleData}
+                          extraCssForLabel=""
+                          extraCssForInput=""
+                        />
+                      </Td>
+                      <Td extrsColCss="px-[10px] py-[8px] font-mediume text-gray-800 text-[18px]">
+                        <Input
+                          type="text"
+                          id="place"
+                          name="place"
+                          label=""
+                          value={place}
+                          placeholder="Where is your chamben?"
+                          onChange={changeScheduleData}
+                          extraCssForLabel=""
+                          extraCssForInput=""
+                        />
+                      </Td>
+                      <Td extrsColCss="px-[10px] py-[8px] font-mediume text-gray-800 text-[18px]">
+                        <Input
+                          type="text"
+                          id="limit"
+                          name="limit"
+                          label=""
+                          value={limit}
+                          placeholder="How many patiences will you check?"
+                          onChange={changeScheduleData}
+                          extraCssForLabel=""
+                          extraCssForInput=""
+                        />
+                      </Td>
+                      <Td extrsColCss="px-[10px] py-[8px] font-mediume text-gray-800 text-[18px]">
+                        <div className="flex gap-2">
+                          <div
+                            className="px-[10px] py-[2px] rounded-[5px] text-white bg-red cursor-pointer"
+                            onClick={cancelEditing}
+                          >
+                            Cancel
+                          </div>
+                          <div
+                            className="px-[10px] py-[2px] rounded-[5px] bg-green-200 cursor-pointer"
+                            onClick={() => eidtRow(index)}
+                          >
+                            Edit
+                          </div>
+                        </div>
+                      </Td>
+                    </Tr>
+                  ) : (
+                    <Tr key={index} extrsRowCss="bg-gray-20">
+                      <Td extrsColCss="px-[10px] py-[8px] font-mediume text-gray-800 text-[18px]">
+                        {schedule.day}
+                      </Td>
+                      <Td extrsColCss="px-[10px] py-[8px] font-mediume text-gray-800 text-[18px]">
+                        {schedule.time}
+                      </Td>
+                      <Td extrsColCss="px-[10px] py-[8px] font-mediume text-gray-800 text-[18px]">
+                        {schedule.place}
+                      </Td>
+                      <Td extrsColCss="px-[10px] py-[8px] font-mediume text-gray-800 text-[18px]">
+                        {schedule.limit}
+                      </Td>
+                      <Td extrsColCss="px-[10px] py-[8px] font-mediume text-gray-800 text-[18px]">
+                        <svg
+                          onClick={() => isEditSchedule(index, schedule)}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          width="22"
+                          height="22"
+                        >
+                          <path
+                            d="M16.7574 2.99666L14.7574 4.99666H5V18.9967H19V9.2393L21 7.2393V19.9967C21 20.5489 20.5523 20.9967 20 20.9967H4C3.44772 20.9967 3 20.5489 3 19.9967V3.99666C3 3.44438 3.44772 2.99666 4 2.99666H16.7574ZM20.4853 2.09717L21.8995 3.51138L12.7071 12.7038L11.2954 12.7062L11.2929 11.2896L20.4853 2.09717Z"
+                            className="fill-blue"
+                          ></path>
+                        </svg>
+                      </Td>
+                    </Tr>
+                  )
+                )
+              ) : (
+                <Tr extrsRowCss="bg-gray-20">
+                  <Td extrsColCss="px-[10px] py-[8px] font-mediume text-gray-800 text-[18px]">
+                    <OptionSelect
+                      options={day}
+                      onChange={handleDay}
+                      selectedDay=""
+                    />
+                  </Td>
+                  <Td extrsColCss="px-[10px] py-[8px] font-mediume text-gray-800 text-[18px]">
+                    <Input
+                      type="text"
+                      id="time"
+                      name="time"
+                      label=""
+                      value={time}
+                      placeholder="When will you start?"
+                      onChange={changeScheduleData}
+                      extraCssForLabel=""
+                      extraCssForInput=""
+                    />
+                  </Td>
+                  <Td extrsColCss="px-[10px] py-[8px] font-mediume text-gray-800 text-[18px]">
+                    <Input
+                      type="text"
+                      id="place"
+                      name="place"
+                      label=""
+                      value={place}
+                      placeholder="Where is your chamben?"
+                      onChange={changeScheduleData}
+                      extraCssForLabel=""
+                      extraCssForInput=""
+                    />
+                  </Td>
+                  <Td extrsColCss="px-[10px] py-[8px] font-mediume text-gray-800 text-[18px]">
+                    <Input
+                      type="text"
+                      id="limit"
+                      name="limit"
+                      label=""
+                      value={limit}
+                      placeholder="How many patiences will you check?"
+                      onChange={changeScheduleData}
+                      extraCssForLabel=""
+                      extraCssForInput=""
+                    />
+                  </Td>
+                  <Td extrsColCss="px-[10px] py-[8px] font-mediume text-gray-800 text-[18px]">
+                    <div className="px-[10px] rounded-[8px] bg-green-200 cursor-pointer">
+                      Save
+                    </div>
+                  </Td>
+                </Tr>
+              )}
+              {newRow && (
+                <Tr extrsRowCss="bg-gray-20">
+                  <Td extrsColCss="px-[10px] py-[8px] font-mediume text-gray-800 text-[18px]">
+                    <OptionSelect
+                      options={day}
+                      onChange={handleDay}
+                      selectedDay=""
+                    />
+                  </Td>
+                  <Td extrsColCss="px-[10px] py-[8px] font-mediume text-gray-800 text-[18px]">
+                    <Input
+                      type="text"
+                      id="time"
+                      name="time"
+                      label=""
+                      value={time}
+                      placeholder="When will you start?"
+                      onChange={changeScheduleData}
+                      extraCssForLabel=""
+                      extraCssForInput=""
+                    />
+                  </Td>
+                  <Td extrsColCss="px-[10px] py-[8px] font-mediume text-gray-800 text-[18px]">
+                    <Input
+                      type="text"
+                      id="place"
+                      name="place"
+                      label=""
+                      value={place}
+                      placeholder="Where is your chamben?"
+                      onChange={changeScheduleData}
+                      extraCssForLabel=""
+                      extraCssForInput=""
+                    />
+                  </Td>
+                  <Td extrsColCss="px-[10px] py-[8px] font-mediume text-gray-800 text-[18px]">
+                    <Input
+                      type="text"
+                      id="limit"
+                      name="limit"
+                      label=""
+                      value={limit}
+                      placeholder="How many patiences will you check?"
+                      onChange={changeScheduleData}
+                      extraCssForLabel=""
+                      extraCssForInput=""
+                    />
+                  </Td>
+                  <Td extrsColCss="px-[10px] py-[8px] font-mediume text-gray-800 text-[18px]">
+                    <div className="flex gap-2">
+                      <div
+                        className="px-[10px] py-[5px] rounded-[5px] bg-red text-white cursor-pointer"
+                        onClick={cancelAdding}
+                      >
+                        Cancel
+                      </div>
+                      <div
+                        className="px-[10px] py-[5px] rounded-[5px] bg-green-200 cursor-pointer"
+                        onClick={storeSchedule}
+                      >
+                        Add
+                      </div>
+                    </div>
+                  </Td>
+                </Tr>
+              )}
+            </TableBody>
           </div>
         </div>
       </div>

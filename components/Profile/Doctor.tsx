@@ -74,8 +74,7 @@ const Doctor = () => {
   const handleDay = (e: any) => {
     setWorkDay(e.target.value);
   };
-  const storeSchedule = (e: any) => {
-    e.preventDefault();
+  const storeSchedule = () => {
     const doctorTime = {
       day: workDay,
       time: time,
@@ -541,7 +540,7 @@ const Doctor = () => {
                     />
                   </Td>
                   <Td extrsColCss="px-[10px] py-[8px] font-mediume text-gray-800 text-[18px]">
-                    <div className="px-[10px] rounded-[8px] bg-green-200 cursor-pointer">
+                    <div className="px-[10px] rounded-[8px] bg-green-200 cursor-pointer" onClick={storeSchedule}>
                       Save
                     </div>
                   </Td>
